@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %} Register {% endblock %}
+
+{% block body %}
+<form action="/register" method="post">
+    <label for="name">Full Name</label>
+    <input type="text" name="fullname" id="name"> <br/>
+    <label for="Username">User Name</label>
+    <input type="text" name="username" id="Username"></br>
+    <label for="forPassword">Password</label>
+    <input type="password" name="pass" id="forPassword"><br/>
+    <!-- <label for="rePassword">Re-type Password</label>
+    <input type="password" name="repass" id="rePassword"><br/>  -->
+
+    <input type="submit" value="submit">
+</form>
+{% endblock %}
