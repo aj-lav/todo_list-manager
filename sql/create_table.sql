@@ -1,15 +1,12 @@
-drop table if exists todo_user;
 drop table if exists task_list;
 drop table if exists task_status;
-
+drop table if exists todo_user;
 
 create table todo_user (
     u_id serial primary key,
-    name text,
     u_name text,
     pass text,
-    first_login timestamp,
-    last_login timestamp
+    created timestamp
 );
 
 create table task_status (
