@@ -35,7 +35,7 @@ def register():
         
         time_now = datetime.now()
         if error is None:
-            cur.execute("insert into todo_user (u_name,pass,created) values (%s,%s,%s)", (username,generate_password_hash(password),time_now))
+            cur.execute("insert into todo_user (u_name,pass,created) values (%s,%s,%s)", (username, generate_password_hash(password, method="sha256"),time_now))
             conn.commit()
             conn.close()
             return redirect(url_for("auth.login"))
@@ -58,10 +58,11 @@ def login():
         user = cur.fetchone()
         if user is None:
             message = "Invalid username"
-        elif check_password_hash(user[2], password):
+        elif not check_password_hash(user[2], password):
             message = "Incorrect password"
+
         if message is None:
             #go to index
-            return render_template("/index.html")
+            return render_template("/task/index.html")
         flash(message, category="'error'")
     return render_template("/auth/login.html")
