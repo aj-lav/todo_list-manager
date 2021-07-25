@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %} Register {% endblock %}
+
+{% block body %}
+<form method = "POST" >
+    <label for="Username">User Name</label>
+    <input type="text" name="username" id="Username" placeholder = "Enter username" required></br>
+    <label for="forPassword">Password</label>
+    <input type="password" name="password" id="forPasswosrd" placeholder = "Enter password" required><br/>
+    <label for="rePassword">Re-Password</label>
+    <input type="password" name="repass" id="rePassword" placeholder = "re-Enter your password" required><br/>
+
+    <input type="submit" value="submit">
+</form>
+{% endblock %}
