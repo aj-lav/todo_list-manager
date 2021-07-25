@@ -10,7 +10,7 @@ def get_db():
     return g.db
 
 def close_db(e=None):
-    db = g.pop('db', None)
+    db = g.pop('db', None) # -- todo > after completion cahnge this statement with if 'db' not in g: then close db
 
     if db is not None:
         db.close()

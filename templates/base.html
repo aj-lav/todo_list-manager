@@ -15,10 +15,10 @@
         <nav>
             <ul>
                 <li>
-                    <a href="/register">Sign Up</a>
+                    <a href="/auth/register">Sign Up</a>
                 </li>
                 <li>
-                    <a href="/login">Sign In</a>
+                    <a href="/auth/login">Sign In</a>
                 </li>
             </ul>
         </nav>
@@ -28,6 +28,9 @@
             <p> {{val}} </p>
         </section>
     </div>
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
     {% block body %}
     {% endblock %}
     
