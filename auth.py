@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask,render_template,request,url_for,Blueprint,g,flash,redirect
+from flask import Flask,render_template,request,url_for,Blueprint,g,flash,redirect,session
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
@@ -7,6 +7,29 @@ bp = Blueprint('auth', 'auth', url_prefix='/auth')
 
 from . import db
 
+def login_required(view):
+    
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for("auth.login"))
+
+        return view(**kwargs)
+
+    return wrapped_view
+
+
+@bp.before_app_request
+def load_logged_in_user():
+    
+    user_id = session.get("user_id")
+
+    if user_id is None:
+        g.user = None
+    else:
+        cur = g.db.cursor()
+        cur.execute("select * from todo_user where id = %s", (user_id,))
+        g.user = cur.fetchone()
 
 @bp.route("/register", methods=["GET","POST"])
 def register():
@@ -62,7 +85,13 @@ def login():
             message = "Incorrect password"
 
         if message is None:
-            #go to index
+            session.clear()
+            session["user_id"] = user[0]
             return render_template("/task/index.html")
         flash(message, category="'error'")
     return render_template("/auth/login.html")
+
+@bp.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("base"))
