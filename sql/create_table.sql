@@ -21,9 +21,10 @@ insert into task_status (name) values  ('overdue');
 create table task_list (
     t_id serial primary key,
     auth_id serial references todo_user(u_id),
-    t_name text,
-    t_desc text,
-    created_info timestamp,
-    up_info timestamp,
+    title text,
+    description text,
+    schedule timestamp,
+    created timestamp,
+    updated timestamp,
     status serial references task_status(s_id)
 );

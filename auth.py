@@ -1,5 +1,7 @@
 from datetime import datetime
-from flask import Flask,render_template,request,url_for,Blueprint,g,flash,redirect,session
+import  functools
+
+from flask import Flask, render_template, request, url_for, Blueprint, g, flash, redirect, session
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
@@ -27,8 +29,9 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        cur = g.db.cursor()
-        cur.execute("select * from todo_user where id = %s", (user_id,))
+        conn = db.get_db()
+        cur = conn.cursor()
+        cur.execute("select * from todo_user where u_id = %s", (user_id,))
         g.user = cur.fetchone()
 
 @bp.route("/register", methods=["GET","POST"])
@@ -87,11 +90,13 @@ def login():
         if message is None:
             session.clear()
             session["user_id"] = user[0]
-            return render_template("/task/index.html")
+            return redirect(url_for("task.index"))
+
         flash(message, category="'error'")
+
     return render_template("/auth/login.html")
 
 @bp.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for("base"))
+    return redirect(url_for("task.index"))

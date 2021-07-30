@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {% block title %} {% endblock %} Todo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename = 'main.css')}}" >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>
     <div>
@@ -14,13 +15,16 @@
         </header>
         <nav>
             <ul>
-                <li>
-                    <a href="/auth/register">Sign Up</a>
-                </li>
-                <li>
-                    <a href="/auth/login">Sign In</a>
-                </li>
-            </ul>
+                {% if g.user %}
+                  <li><span>{{ g.user[1] }}</span>
+                  <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+                  <li><a class="action" href="{{ url_for('task.create') }}">New Task</a>
+                {% else %}
+                  <li><a href="{{ url_for('auth.register') }}">Register</a>
+                  <li><a href="{{ url_for('auth.login') }}">Log In</a>
+                {% endif %}
+              </ul>
+
         </nav>
     </div>
     <div>

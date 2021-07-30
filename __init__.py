@@ -14,7 +14,7 @@ def create_app():
     from . import auth
     app.register_blueprint(auth.bp)
 
-    @app.route("/")
-    def index():
-        return render_template("base.html", val= "hello guys!")
+    from . import task
+    app.register_blueprint(task.tk)
+    app.add_url_rule("/", endpoint="index")
     return app
