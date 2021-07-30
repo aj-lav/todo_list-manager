@@ -64,7 +64,7 @@ def update(task_id):
         task_title = request.form["title"]
         task_description = request.form["body"]
         schedule = request.form["schedule"]
-        print(schedule)
+        
         error = None
 
         if not task_title:
