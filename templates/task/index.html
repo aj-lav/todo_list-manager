@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+  {% for task in  tasks %}
+    <article class="task">
+      <header>
+        <div>
+          <h1>{{ task[2] }}</h1>
+          <div class="about">Created on {{ task[5] }}</div>
+          <div class="about">Scheduled for {{ task[4] }} </div>
+          {% if task[6] is none %}
+          <div class="about">Note yet updated</div>
+          {% else %}
+          <div class="about">Updated on {{ task[6] }}</div>
+          {% endif %}
+        </div>
+          <a class="action" href="{{ url_for('task.update', task_id=task[0]) }}">Edit</a>
+      </header>
+      <p class="body">{{ task[3] }}</p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+
+
+{% endblock %}

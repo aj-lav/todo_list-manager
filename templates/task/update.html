@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit -{{ task[2] }}{% endblock %}</h1>
+{% endblock %}
+
+{% block body %}
+  <form method="post">
+    <label for="title">Task Title</label>
+    <input name="title" id="title" value ="{{ task[2] }}" required><br/>
+    <label for="body">Detail</label>
+    <textarea name="body" id="body" > {{task[3]}} </textarea><br/>
+    <label for="schedule">time schedule</label>
+    <input type="datetime-local" name="schedule" id="schedule" value ="{{ task[4] }}" ><br/>
+    <input type="submit" value="Save">
+    
+  </form>
+{% endblock %}
