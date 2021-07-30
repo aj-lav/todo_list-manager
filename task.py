@@ -84,13 +84,12 @@ def update(task_id):
             return redirect(url_for("task.index"))
     return render_template("/task/update.html", task = task)
 
-@tk.route("/<int:id>/delete", methods=["POST"])
+@tk.route("/<int:task_id>/delete", methods=["POST","GET"])
 @auth.login_required
 def delete(task_id):
-    
     task = get_task_details(task_id)
     conn = db.get_db()
     cur = conn.cursor()
-    cur.execute("delete from task_list where t_id=%s", (task_id))
+    cur.execute("delete from task_list where t_id=%s", (task_id,))
     conn.commit()
-    return redirect(url_for("blog.index"))
+    return redirect(url_for("task.index"))
